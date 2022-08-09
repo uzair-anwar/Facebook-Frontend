@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserProvider } from "./Context/userContext";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
-import Main from "./Components/Main";
+import Main from "./Pages/Main";
 
 function App() {
   return (
