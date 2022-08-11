@@ -5,13 +5,24 @@ import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import "../StyleSheets/account-style.css";
 import account from "../Services/accounts";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
 const Signup = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-
+  const notify = () => {
+    toast.success("Account Successfully created", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
   const onSubmit = async (values) => {
     const user = {
       name: values.name,
@@ -22,7 +33,7 @@ const Signup = () => {
       .signup(user)
       .then((response) => {
         if (response.status === 201) {
-          alert("Account created successfully");
+          notify();
           navigate("/");
         }
         if (response.status === 409) {
@@ -35,6 +46,7 @@ const Signup = () => {
         setError(error.message);
       });
   };
+
   //use Formik libraray
   const formik = useFormik({
     initialValues: {

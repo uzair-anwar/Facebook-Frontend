@@ -20,11 +20,12 @@ const Login = () => {
 
     await account.login(user).then((response) => {
       if (response.status === 200) {
-        alert("login Sucessfully");
         setUser(response.result);
         setToken(response.accessToken);
+        localStorage.setItem("token", response.accessToken);
         navigate("/posts");
       } else {
+        alert("Error");
         setLoginError(response.message);
       }
     });

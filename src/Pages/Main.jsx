@@ -1,7 +1,7 @@
 function Main() {
   return (
     <div>
-      <h2>Welcome, Logging in Successfully</h2>
+      <h2>Welcome to Facebook</h2>
     </div>
   );
 }
