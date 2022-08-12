@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../StyleSheets/account-style.css";
-import account from "../Services/accounts";
+import { login } from "../Services/accounts";
 import { UserContext } from "../Context/userContext";
 
 const Login = () => {
@@ -18,11 +18,12 @@ const Login = () => {
       password: values.password,
     };
 
-    await account.login(user).then((response) => {
+    await login(user).then((response) => {
       if (response.status === 200) {
         setUser(response.result);
         setToken(response.accessToken);
         localStorage.setItem("token", response.accessToken);
+        localStorage.setItem("userId", response.result.id);
         navigate("/posts");
       } else {
         alert("Error");
