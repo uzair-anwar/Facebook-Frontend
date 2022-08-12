@@ -26,7 +26,7 @@ const createPost = async (post) => {
       data: {
         title: post.title,
         content: post.content,
-        userId: post.userID,
+        userId: post.userId,
       },
       headers: {
         "x-access-token": token,

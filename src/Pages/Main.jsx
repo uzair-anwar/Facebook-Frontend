@@ -7,8 +7,8 @@ import { getAllPosts } from "../Services/posts";
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
-  const [userId] = useState(localStorage.getItem("userId"));
-
+  const tempUserId = useState(localStorage.getItem("userId"));
+  const userId = tempUserId[0];
   useEffect(() => {
     getAllPosts().then((response) => {
       if (response.status === 200) {
