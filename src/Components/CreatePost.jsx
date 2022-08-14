@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../StyleSheets/posts-style.css";
@@ -6,9 +6,12 @@ import { Button, TextField } from "@material-ui/core";
 import { createPost } from "../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+const _ = require("lodash");
 toast.configure();
 
-const CreatePost = ({ posts, setPosts, userId }) => {
+const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
+  const [draftError, setDraftError] = useState("");
+
   const notify = (message) => {
     toast.success(message, {
       position: "top-right",
@@ -19,6 +22,34 @@ const CreatePost = ({ posts, setPosts, userId }) => {
       draggable: true,
       progress: undefined,
     });
+  };
+
+  const draft = (values) => {
+    if (values.title.length > 0 || values.content.length > 0) {
+      let id = _.uniqueId("0");
+      const newPost = {
+        id: id,
+        title: values.title,
+        content: values.content,
+        userId: userId,
+      };
+
+      let updatedDraftPost = [];
+
+      if (draftPost !== null) {
+        updatedDraftPost = [...draftPost];
+      }
+
+      updatedDraftPost.push(newPost);
+      setDraftPost(updatedDraftPost);
+      localStorage.setItem("draftPost", JSON.stringify(updatedDraftPost));
+      notify("Post save in draft successfully");
+
+      values.title = "";
+      values.content = "";
+    } else {
+      setDraftError("Atleast One field has Content");
+    }
   };
 
   const onSubmit = async (values) => {
@@ -73,6 +104,7 @@ const CreatePost = ({ posts, setPosts, userId }) => {
           type="text"
           placeholder="Enter Title"
           value={formik.values.title}
+          onClick={() => setDraftError(null)}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
@@ -90,6 +122,7 @@ const CreatePost = ({ posts, setPosts, userId }) => {
           name="content"
           type="text"
           placeholder="Enter Content"
+          onClick={() => setDraftError(null)}
           value={formik.values.content}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -99,10 +132,26 @@ const CreatePost = ({ posts, setPosts, userId }) => {
           <div className="error-msg">{formik.errors.content}</div>
         ) : null}
 
-        <div className="create-btn">
-          <Button variant="contained" type="submit">
-            Create
-          </Button>
+        {draftError !== null ? (
+          <div className="error-msg">{draftError}</div>
+        ) : null}
+
+        <div className="buttons">
+          <div className="create-btn">
+            <Button variant="contained" type="submit">
+              Create
+            </Button>
+          </div>
+
+          <div className="create-btn">
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => draft(formik.values)}
+            >
+              Draft
+            </Button>
+          </div>
         </div>
       </div>
     </form>

@@ -89,6 +89,7 @@
   border: none;
 }
 
+.draft,
 .logout,
 .common-btn {
   width: 200px;
@@ -106,6 +107,7 @@
   width: 150px !important;
 }
 
+.draft,
 .logout {
   height: 40px !important;
   width: 100px !important;
