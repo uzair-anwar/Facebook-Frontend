@@ -6,6 +6,7 @@ import Main from "./Pages/Main";
 import EditPost from "./Components/EditPost";
 import EditDraftPost from "./Components/EditDraft";
 import ProtectedRoute from "./Routes/ProtectedRoute";
+import NoRoutes from "./Components/NoRoutes";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path="/Post/:id/edit" element={<EditPost />} />
             <Route path="/Draft/:id/edit" element={<EditDraftPost />} />
           </Route>
-          <Route path="*" element={<h2>There's nothing here: 404!</h2>} />
+          <Route path="*" element={<NoRoutes />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>

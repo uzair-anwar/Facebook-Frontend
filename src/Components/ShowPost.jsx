@@ -50,7 +50,7 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
               state={{ post: post, posts: posts }}
             >
               {" "}
-              UPDATE    
+              UPDATE
             </Link>
           </button>
 

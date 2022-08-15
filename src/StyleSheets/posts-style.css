@@ -165,3 +165,9 @@
 .create-btn {
   margin-top: 10px;
 }
+
+.back-btn {
+  position: absolute;
+  left: 43%;
+  top: 50%;
+}

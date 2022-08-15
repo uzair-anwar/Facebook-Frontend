@@ -21,9 +21,9 @@ const Main = () => {
       }
     });
 
-    const localDraftPosts = JSON.parse(localStorage.getItem("draftPost"));
+    const localDraftPosts = localStorage.getItem("draftPost");
     if (localDraftPosts !== null) {
-      setDraftPost(localDraftPosts);
+      setDraftPost(JSON.parse(localDraftPosts));
     }
   }, []);
 
