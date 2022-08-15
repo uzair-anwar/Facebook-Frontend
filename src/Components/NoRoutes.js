@@ -23,7 +23,7 @@ const NoRoutes = () => {
   }, []);
 
   const back = () => {
-    navigate("/");
+    navigate("/posts");
   };
 
   return (

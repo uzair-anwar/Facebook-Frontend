@@ -12,7 +12,8 @@ const Main = () => {
   const [active, setActive] = useState("Posts");
 
   const tempUserId = useState(localStorage.getItem("userId"));
-  const userId = tempUserId[0];
+  const userId = useState(tempUserId[0]);
+  const [localDraftPosts, setLocalDraftPosts] = useState(null);
 
   useEffect(() => {
     getAllPosts().then((response) => {
@@ -21,7 +22,7 @@ const Main = () => {
       }
     });
 
-    const localDraftPosts = localStorage.getItem("draftPost");
+    setLocalDraftPosts(localStorage.getItem("draftPost"));
     if (localDraftPosts !== null) {
       setDraftPost(JSON.parse(localDraftPosts));
     }

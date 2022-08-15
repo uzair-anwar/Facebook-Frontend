@@ -74,7 +74,7 @@ const ShowDraft = ({ draftPost, draftPosts, userId, setDraftPosts }) => {
             DELETE
           </button>
 
-          <button className="delete-btn common-btn" onClick={() => publish()}>
+          <button className="draft-btn common-btn" onClick={() => publish()}>
             PUBLISH
           </button>
         </div>

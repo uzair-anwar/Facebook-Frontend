@@ -25,6 +25,8 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
   };
 
   const draft = (values) => {
+    // eslint-disable-next-line no-restricted-globals
+    event.preventDefault();
     if (values.title.length > 0 || values.content.length > 0) {
       let id = _.uniqueId("0");
       const newPost = {
@@ -47,6 +49,8 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
 
       values.title = "";
       values.content = "";
+      formik.errors.title = null;
+      formik.errors.content = null;
     } else {
       setDraftError("Atleast One field has Content");
     }
@@ -109,9 +113,11 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
           onBlur={formik.handleBlur}
         />
 
-        {formik.touched.title && formik.errors.title ? (
-          <div className="error-msg">{formik.errors.title}</div>
-        ) : null}
+        <div className="error-section">
+          {formik.touched.title && formik.errors.title ? (
+            <div className="error-msg">{formik.errors.title}</div>
+          ) : null}
+        </div>
 
         <TextField
           label="Content"
@@ -128,9 +134,11 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
           onBlur={formik.handleBlur}
         />
 
-        {formik.touched.content && formik.errors.content ? (
-          <div className="error-msg">{formik.errors.content}</div>
-        ) : null}
+        <div className="error-section">
+          {formik.touched.content && formik.errors.content ? (
+            <div className="error-msg">{formik.errors.content}</div>
+          ) : null}
+        </div>
 
         {draftError !== null ? (
           <div className="error-msg">{draftError}</div>
