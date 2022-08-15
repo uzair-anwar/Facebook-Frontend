@@ -40,12 +40,14 @@ const createPost = async (post) => {
   }
 };
 
-const deletePost = async (id) => {
+const deletePost = async (id, userId) => {
   try {
     const response = await axios({
       method: "delete",
       url: `${process.env.REACT_APP_SERVER_API}/post/${id}`,
-
+      data: {
+        userId: userId,
+      },
       headers: {
         "x-access-token": token,
         "Content-Type": "application/json",
@@ -70,6 +72,7 @@ const editPost = async (post) => {
       data: {
         title: post.title,
         content: post.content,
+        userId: post.userId,
       },
     });
 

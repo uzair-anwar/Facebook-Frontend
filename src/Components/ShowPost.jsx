@@ -19,7 +19,7 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
   };
 
   function removePost(id) {
-    deletePost(id).then((response) => {
+    deletePost(id, userId).then((response) => {
       if (response.status === 200) {
         const updatedPosts = posts.filter((post) => post.id !== id);
         setPosts(updatedPosts);
@@ -50,7 +50,7 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
               state={{ post: post, posts: posts }}
             >
               {" "}
-              UPDATE    
+              UPDATE
             </Link>
           </button>
 
