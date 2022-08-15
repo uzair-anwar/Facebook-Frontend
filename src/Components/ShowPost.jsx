@@ -33,12 +33,18 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
     setPosts(updatedPosts);
   }
 
+  const splitTime = (time) => {
+    time = time.split("T");
+    time = time[1].split(".")[0] + " " + time[0];
+    return time;
+  };
+
   return (
     <div key={post.id} className="post">
-      <p>
+      <p className="title">
         <i>{post.title}</i>
       </p>
-
+      <p>{"Time " + splitTime(post.createdAt)}</p>
       <p className="content">{post.content}</p>
 
       {post.userId == userId ? (

@@ -9,6 +9,7 @@ const Main = () => {
   const [posts, setPosts] = useState([]);
   const tempUserId = useState(localStorage.getItem("userId"));
   const userId = tempUserId[0];
+
   useEffect(() => {
     getAllPosts().then((response) => {
       if (response.status === 200) {
