@@ -8,7 +8,7 @@ import { getAllPosts } from "../Services/posts";
 const Main = () => {
   const [posts, setPosts] = useState([]);
   const tempUserId = useState(localStorage.getItem("userId"));
-  const userId = tempUserId[0];
+  const [userId] = useState(tempUserId[0]);
 
   useEffect(() => {
     getAllPosts().then((response) => {

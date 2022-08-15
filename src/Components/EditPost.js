@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@material-ui/core";
@@ -11,8 +11,20 @@ toast.configure();
 const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const post = location.state.post;
-  const posts = location.state.posts;
+
+  useEffect(() => {
+    if (location.state == null) {
+      navigate("*");
+    }
+  }, []);
+
+  const [post, setPost] = useState(null);
+  const [posts, setPosts] = useState(null);
+
+  if (location.state !== null) {
+    setPost(location.state.post);
+    setPosts(location.state.posts);
+  }
 
   const notify = (message) => {
     toast.success(message, {
@@ -28,8 +40,8 @@ const EditPost = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: post.title,
-      content: post.content,
+      title: post?.title,
+      content: post?.content,
     },
 
     validationSchema: Yup.object({

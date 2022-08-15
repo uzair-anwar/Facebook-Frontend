@@ -28,9 +28,6 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
         notify(response.message);
       }
     });
-
-    const updatedPosts = posts.filter((post) => post.id !== id);
-    setPosts(updatedPosts);
   }
 
   const splitTime = (time) => {
