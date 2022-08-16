@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@material-ui/core";
@@ -11,23 +11,20 @@ toast.configure();
 const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  let post = null;
+  let allPosts = null;
 
-  /*useEffect run before mounting the component and condition
-  in it will check component have post or post in the state
-  of rendering component if not then navigate to the Error page
-  Basically this is use to protect from accesing unpublished post*/
+  /*Condition will check user send their state(Post or allPosts)
+  to component or not. if not then navigate to the Error page*/
   useEffect(() => {
-    if (location.state == null) {
+    if (location.state === null) {
       navigate("*");
     }
   }, []);
 
-  const [post, setPost] = useState(null);
-  const [allPosts, setAllPosts] = useState(null);
-
   if (location.state !== null) {
-    setPost(location.state.post);
-    setAllPosts(location.state.posts);
+    post = location.state.post;
+    allPosts = location.state.posts;
   }
 
   const notify = (message) => {
@@ -60,6 +57,7 @@ const EditPost = () => {
         id: post.id,
         title: values.title,
         content: values.content,
+        userId: post.userId,
       };
 
       editPost(newPost).then((response) => {

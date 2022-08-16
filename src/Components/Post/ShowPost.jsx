@@ -31,8 +31,24 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
   }
 
   const splitTime = (time) => {
-    time = time.split("T");
-    time = time[1].split(".")[0] + " " + time[0];
+    if (time !== undefined) {
+      time = time.split("T");
+      time = time[1].split(".")[0] + " " + time[0];
+    } else {
+      let date = new Date();
+      time =
+        date.getHours() +
+        ":" +
+        date.getMinutes() +
+        ":" +
+        date.getSeconds() +
+        " " +
+        date.getFullYear() +
+        "-" +
+        date.getMonth() +
+        "-" +
+        date.getDate;
+    }
     return time;
   };
 
