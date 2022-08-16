@@ -1,9 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "../StyleSheets/posts-style.css";
+import "../../StyleSheets/posts-style.css";
 import { Button, TextField } from "@material-ui/core";
-import { createPost } from "../Services/posts";
+import { createPost } from "../../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();

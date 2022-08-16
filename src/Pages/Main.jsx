@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../StyleSheets/posts-style.css";
 import Navbar from "../Components/Navebar";
-import CreatePost from "../Components/CreatePost";
-import ShowPost from "../Components/ShowPost";
+import CreatePost from "../Components/Post/CreatePost";
+import ShowPost from "../Components/Post/ShowPost";
 import { getAllPosts } from "../Services/posts";
 
 const Main = () => {

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@material-ui/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { editPost } from "../Services/posts";
+import { editPost } from "../../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
@@ -12,6 +12,10 @@ const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  /*useEffect run before mounting the component and condition
+  in it will check component have post or post in the state
+  of rendering component if not then navigate to the Error page
+  Basically this is use to protect from accesing unpublished post*/
   useEffect(() => {
     if (location.state == null) {
       navigate("*");
@@ -19,11 +23,11 @@ const EditPost = () => {
   }, []);
 
   const [post, setPost] = useState(null);
-  const [posts, setPosts] = useState(null);
+  const [allPosts, setAllPosts] = useState(null);
 
   if (location.state !== null) {
     setPost(location.state.post);
-    setPosts(location.state.posts);
+    setAllPosts(location.state.posts);
   }
 
   const notify = (message) => {
@@ -60,9 +64,9 @@ const EditPost = () => {
 
       editPost(newPost).then((response) => {
         if (response.status == 200) {
-          const index = posts.findIndex((data) => data.id === post.id);
-          posts[index].title = values.title;
-          posts[index].body = values.content;
+          const index = allPosts.findIndex((data) => data.id === post.id);
+          allPosts[index].title = values.title;
+          allPosts[index].body = values.content;
           notify(response.message);
           navigate("/posts");
         }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "../StyleSheets/posts-style.css";
-import { deletePost } from "../Services/posts";
+import "../../StyleSheets/posts-style.css";
+import { deletePost } from "../../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();

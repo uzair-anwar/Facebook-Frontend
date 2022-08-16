@@ -3,9 +3,9 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "../StyleSheets/account-style.css";
-import { login } from "../Services/accounts";
-import { UserContext } from "../Context/userContext";
+import "../../StyleSheets/account-style.css";
+import { login } from "../../Services/accounts";
+import { UserContext } from "../../Context/userContext";
 
 const Login = () => {
   const [loginError, setLoginError] = useState(null);
