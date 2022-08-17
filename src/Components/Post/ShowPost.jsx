@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "../StyleSheets/posts-style.css";
-import { deletePost } from "../Services/posts";
+import "../../StyleSheets/posts-style.css";
+import { deletePost } from "../../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
@@ -19,7 +19,7 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
   };
 
   function removePost(id) {
-    deletePost(id).then((response) => {
+    deletePost(id, userId).then((response) => {
       if (response.status === 200) {
         const updatedPosts = posts.filter((post) => post.id !== id);
         setPosts(updatedPosts);
@@ -28,17 +28,22 @@ const ShowPost = ({ post, posts, userId, setPosts }) => {
         notify(response.message);
       }
     });
-
-    const updatedPosts = posts.filter((post) => post.id !== id);
-    setPosts(updatedPosts);
   }
+
+  const splitTime = (time) => {
+    if (time !== undefined) {
+      time = time.split("T");
+      time = time[1].split(".")[0] + " " + time[0];
+    }
+    return time;
+  };
 
   return (
     <div key={post.id} className="post">
-      <p>
+      <p className="title">
         <i>{post.title}</i>
       </p>
-
+      <p>{"Time " + splitTime(post.createdAt)}</p>
       <p className="content">{post.content}</p>
 
       {post.userId == userId ? (

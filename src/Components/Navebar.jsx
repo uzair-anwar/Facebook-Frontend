@@ -1,4 +1,4 @@
-import Logout from "./Logout";
+import Logout from "./Account/Logout";
 
 const Navbar = ({ setActive }) => {
   return (

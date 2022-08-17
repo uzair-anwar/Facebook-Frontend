@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@material-ui/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { editPost } from "../Services/posts";
+import { editPost } from "../../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
@@ -11,8 +11,21 @@ toast.configure();
 const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const post = location.state.post;
-  const posts = location.state.posts;
+  let post = null;
+  let allPosts = null;
+
+  /*Condition will check user send their state(Post or allPosts)
+  to component or not. if not then navigate to the Error page*/
+  useEffect(() => {
+    if (location.state === null) {
+      navigate("*");
+    }
+  }, []);
+
+  if (location.state !== null) {
+    post = location.state.post;
+    allPosts = location.state.posts;
+  }
 
   const notify = (message) => {
     toast.success(message, {
@@ -28,8 +41,8 @@ const EditPost = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: post.title,
-      content: post.content,
+      title: post?.title,
+      content: post?.content,
     },
 
     validationSchema: Yup.object({
@@ -44,13 +57,14 @@ const EditPost = () => {
         id: post.id,
         title: values.title,
         content: values.content,
+        userId: post.userId,
       };
 
       editPost(newPost).then((response) => {
         if (response.status == 200) {
-          const index = posts.findIndex((data) => data.id === post.id);
-          posts[index].title = values.title;
-          posts[index].body = values.content;
+          const index = allPosts.findIndex((data) => data.id === post.id);
+          allPosts[index].title = values.title;
+          allPosts[index].body = values.content;
           notify(response.message);
           navigate("/posts");
         }
