@@ -21,7 +21,7 @@ const Main = () => {
         setPosts(response.result.reverse());
       }
     });
-  }, []);
+  }, [active]);
 
   return (
     <>
