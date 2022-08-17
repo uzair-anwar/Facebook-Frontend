@@ -3,8 +3,10 @@ import { UserProvider } from "./Context/userContext";
 import Login from "./Components/Account/Login";
 import Signup from "./Components/Account/Signup";
 import Main from "./Pages/Main";
-import EditPost from "./Components/Post/EditPost";
+import EditPost from "./Components/EditPost";
+import EditDraftPost from "./Components/Draft/EditDraft";
 import ProtectedRoute from "./Routes/ProtectedRoute";
+import UndefineRoutes from "./Components/UndefineRoutes";
 
 function App() {
   return (
@@ -16,8 +18,9 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="posts" element={<Main />} />
             <Route path="/Post/:id/edit" element={<EditPost />} />
+            <Route path="/Draft/:id/edit" element={<EditDraftPost />} />
           </Route>
-          <Route path="*" element={<h2>There's nothing here: 404!</h2>} />
+          <Route path="*" element={<UndefineRoutes />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
