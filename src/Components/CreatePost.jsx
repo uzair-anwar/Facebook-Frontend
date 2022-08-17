@@ -25,9 +25,7 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
   };
 
   const draft = (values) => {
-    // eslint-disable-next-line no-restricted-globals
-    event.preventDefault();
-    if (values.title.length > 0 || values.content.length > 0) {
+    if (!_.isEmpty(values.title) || !_.isEmpty(values.content)) {
       let id = _.uniqueId("0");
       const newPost = {
         id: id,

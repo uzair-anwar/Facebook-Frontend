@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import "../StyleSheets/posts-style.css";
+import "../../StyleSheets/posts-style.css";
 import { toast } from "react-toastify";
-import { createPost } from "../Services/posts";
+import { createPost } from "../../Services/posts";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
-const ShowDraft = ({ draftPost, draftPosts, userId, setDraftPosts }) => {
+const ShowDraft = ({ draftPost, draftAllPosts, userId, setDraftAllPosts }) => {
   const notify = (message) => {
     toast.success(message, {
       position: "top-right",
@@ -27,11 +27,11 @@ const ShowDraft = ({ draftPost, draftPosts, userId, setDraftPosts }) => {
 
     await createPost(newPost).then((response) => {
       if (response.status === 201) {
-        const updatedPosts = draftPosts.filter(
+        const updatedPosts = draftAllPosts.filter(
           (post) => post.id !== draftPost.id
         );
 
-        setDraftPosts(updatedPosts);
+        setDraftAllPosts(updatedPosts);
         localStorage.setItem("draftPost", JSON.stringify(updatedPosts));
         notify(response.message);
       } else if (response.status === 400) {
@@ -41,8 +41,11 @@ const ShowDraft = ({ draftPost, draftPosts, userId, setDraftPosts }) => {
   };
 
   function removeDraftPost() {
-    const updatedPosts = draftPosts.filter((post) => post.id !== draftPost.id);
-    setDraftPosts(updatedPosts);
+    const updatedPosts = draftAllPosts.filter(
+      (post) => post.id !== draftPost.id
+    );
+
+    setDraftAllPosts(updatedPosts);
     localStorage.setItem("draftPost", JSON.stringify(updatedPosts));
   }
 
@@ -60,7 +63,7 @@ const ShowDraft = ({ draftPost, draftPosts, userId, setDraftPosts }) => {
             <Link
               className="update-link"
               to={"/Draft/" + draftPost.id + "/edit"}
-              state={{ post: draftPost, posts: draftPosts }}
+              state={{ draftPost: draftPost, draftAllPosts: draftAllPosts }}
             >
               {" "}
               UPDATE

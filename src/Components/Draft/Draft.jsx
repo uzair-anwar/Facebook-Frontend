@@ -6,8 +6,8 @@ const Draft = ({ userId, draftPost, setDraftPost }) => {
     <div key={post.id}>
       <ShowDraft
         draftPost={post}
-        draftPosts={draftPost}
-        setDraftPosts={setDraftPost}
+        draftAllPosts={draftPost}
+        setDraftAllPosts={setDraftPost}
         userId={userId}
       />
     </div>

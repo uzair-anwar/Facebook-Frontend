@@ -4,16 +4,16 @@ import Navbar from "../Components/Navebar";
 import CreatePost from "../Components/CreatePost";
 import ShowPost from "../Components/ShowPost";
 import { getAllPosts } from "../Services/posts";
-import Draft from "../Components/Draft";
+import Draft from "../Components/Draft/Draft";
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
-  const [draftPost, setDraftPost] = useState([]);
+  const [draftPost, setDraftPost] = useState(
+    JSON.parse(localStorage.getItem("draftPost"))
+  );
   const [active, setActive] = useState("Posts");
-
   const tempUserId = useState(localStorage.getItem("userId"));
-  const userId = useState(tempUserId[0]);
-  const [localDraftPosts, setLocalDraftPosts] = useState(null);
+  const [userId] = useState(tempUserId[0]);
 
   useEffect(() => {
     getAllPosts().then((response) => {
@@ -21,11 +21,6 @@ const Main = () => {
         setPosts(response.result.reverse());
       }
     });
-
-    setLocalDraftPosts(localStorage.getItem("draftPost"));
-    if (localDraftPosts !== null) {
-      setDraftPost(JSON.parse(localDraftPosts));
-    }
   }, []);
 
   return (

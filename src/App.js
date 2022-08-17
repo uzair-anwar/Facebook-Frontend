@@ -4,9 +4,9 @@ import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Main from "./Pages/Main";
 import EditPost from "./Components/EditPost";
-import EditDraftPost from "./Components/EditDraft";
+import EditDraftPost from "./Components/Draft/EditDraft";
 import ProtectedRoute from "./Routes/ProtectedRoute";
-import NoRoutes from "./Components/NoRoutes";
+import UndefineRoutes from "./Components/UndefineRoutes";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
             <Route path="/Post/:id/edit" element={<EditPost />} />
             <Route path="/Draft/:id/edit" element={<EditDraftPost />} />
           </Route>
-          <Route path="*" element={<NoRoutes />} />
+          <Route path="*" element={<UndefineRoutes />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>

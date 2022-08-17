@@ -16,8 +16,10 @@ const notify = (message) => {
     progress: undefined,
   });
 };
-const NoRoutes = () => {
+
+const UndefineRoutes = () => {
   const navigate = useNavigate();
+
   useEffect(() => {
     notify("There's nothing here: 404!");
   }, []);
@@ -35,4 +37,4 @@ const NoRoutes = () => {
   );
 };
 
-export default NoRoutes;
+export default UndefineRoutes;

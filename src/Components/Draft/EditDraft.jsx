@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { Button, TextField } from "@material-ui/core";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ toast.configure();
 const EditDraftPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  let draftPost = null;
+  let draftAllPosts = null;
 
   useEffect(() => {
     if (location.state == null) {
@@ -16,12 +18,9 @@ const EditDraftPost = () => {
     }
   }, []);
 
-  const [post, setPost] = useState(null);
-  const [posts, setPosts] = useState(null);
-
   if (location.state !== null) {
-    setPost(location.state.post);
-    setPosts(location.state.posts);
+    draftPost = location.state.draftPost;
+    draftAllPosts = location.state.draftAllPosts;
   }
 
   const notify = (message) => {
@@ -38,18 +37,18 @@ const EditDraftPost = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: post?.title,
-      content: post?.content,
+      title: draftPost?.title,
+      content: draftPost?.content,
     },
 
     onSubmit(values) {
-      const index = posts.findIndex((data) => data.id === post.id);
-      posts[index].title = values.title;
-      posts[index].content = values.content;
+      const index = draftAllPosts.findIndex((data) => data.id === draftPost.id);
+      draftAllPosts[index].title = values.title;
+      draftAllPosts[index].content = values.content;
 
       localStorage.removeItem("draftPost");
-      localStorage.setItem("draftPost", JSON.stringify(posts));
-      notify("Post updated successfully");
+      localStorage.setItem("draftPost", JSON.stringify(draftAllPosts));
+      notify("Drafted Post updated successfully");
       navigate("/posts");
     },
   });
@@ -57,7 +56,7 @@ const EditDraftPost = () => {
   return (
     <form onSubmit={formik.handleSubmit} className="edit-form">
       <div className="form">
-        <h2>Update your post</h2>
+        <h2>Update your drafted post</h2>
         <TextField
           label="Title"
           variant="standard"
