@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../StyleSheets/posts-style.css";
+import "../StyleSheets/404Page-style.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
@@ -29,10 +29,16 @@ const UndefineRoutes = () => {
   };
 
   return (
-    <div className="back-btn">
-      <button className="common-btn delete-btn" onClick={() => back()}>
-        Back
-      </button>
+    <div id="notfound">
+      <div class="notfound">
+        <div class="notfound-404">
+          <h1>Oops!</h1>
+          <h2>404 - The Page can't be found</h2>
+        </div>
+        <button className="common-btn delete-btn" onClick={() => back()}>
+          Back
+        </button>
+      </div>
     </div>
   );
 };

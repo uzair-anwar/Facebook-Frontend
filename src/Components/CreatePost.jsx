@@ -24,6 +24,26 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
     });
   };
 
+  const clearField = (values) => {
+    values.title = "";
+    values.content = "";
+    formik.errors.title = null;
+    formik.errors.content = null;
+  };
+
+  const creatDraftPost = (newPost) => {
+    let updatedDraftPost = [];
+
+    if (draftPost !== null) {
+      updatedDraftPost = [...draftPost];
+    }
+
+    updatedDraftPost.push(newPost);
+    setDraftPost(updatedDraftPost);
+    localStorage.setItem("draftPost", JSON.stringify(updatedDraftPost));
+    notify("Post save in draft successfully");
+  };
+
   const draft = (values) => {
     if (!_.isEmpty(values.title) || !_.isEmpty(values.content)) {
       let id = _.uniqueId("0");
@@ -34,21 +54,8 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
         userId: userId,
       };
 
-      let updatedDraftPost = [];
-
-      if (draftPost !== null) {
-        updatedDraftPost = [...draftPost];
-      }
-
-      updatedDraftPost.push(newPost);
-      setDraftPost(updatedDraftPost);
-      localStorage.setItem("draftPost", JSON.stringify(updatedDraftPost));
-      notify("Post save in draft successfully");
-
-      values.title = "";
-      values.content = "";
-      formik.errors.title = null;
-      formik.errors.content = null;
+      creatDraftPost(newPost);
+      clearField(values);
     } else {
       setDraftError("Atleast One field has Content");
     }
