@@ -111,11 +111,13 @@ const EditPost = () => {
           <div className="error-msg">{formik.errors.content}</div>
         ) : null}
 
-        <div className="create-btn">
-          <Button variant="contained" type="submit">
-            Update
-          </Button>
-        </div>
+        <button
+          className="update-btn common-btn"
+          variant="contained"
+          type="submit"
+        >
+          Update
+        </button>
       </div>
     </form>
   );

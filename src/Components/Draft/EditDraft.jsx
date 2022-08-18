@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import { Button, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -92,11 +92,13 @@ const EditDraftPost = () => {
           <div className="error-msg">{formik.errors.content}</div>
         ) : null}
 
-        <div className="create-btn">
-          <Button variant="contained" type="submit">
-            Update
-          </Button>
-        </div>
+        <button
+          className="update-btn common-btn"
+          variant="contained"
+          type="submit"
+        >
+          Update
+        </button>
       </div>
     </form>
   );

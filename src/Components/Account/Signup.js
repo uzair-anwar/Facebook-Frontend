@@ -38,6 +38,9 @@ const Signup = () => {
         }
         if (response.status === 409) {
           setError(response.message);
+        }
+        if (response.status === 422) {
+          setError(response.error[0].msg);
         } else {
           setError(response.message);
         }

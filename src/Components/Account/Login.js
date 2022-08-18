@@ -26,7 +26,6 @@ const Login = () => {
         localStorage.setItem("userId", response.result.id);
         navigate("/posts");
       } else {
-        alert("Error");
         setLoginError(response.message);
       }
     });

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import "../../StyleSheets/posts-style.css";
-import { Button, TextField } from "@material-ui/core";
+import "../../StyleSheets/404Page-style.css";
+import { TextField } from "@material-ui/core";
 import { createPost } from "../../Services/posts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +9,11 @@ const _ = require("lodash");
 toast.configure();
 
 const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
-  const [draftError, setDraftError] = useState("");
+  const [titleError, setTitleError] = useState(null);
+  const [contentError, setContentError] = useState(null);
+  const [draftError, setDraftError] = useState(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const notify = (message) => {
     toast.success(message, {
@@ -24,11 +27,43 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
     });
   };
 
+  const setError = () => {
+    setDraftError(null);
+    setTitleError(null);
+    setContentError(null);
+  };
+
   const clearField = (values) => {
-    values.title = "";
-    values.content = "";
-    formik.errors.title = null;
-    formik.errors.content = null;
+    setTitle("");
+    setContent("");
+    setError();
+  };
+
+  //write logic here
+  const stringValidationTitle = () => {
+    if (!_.isEmpty(title)) {
+      if (!isNaN(title)) {
+        setTitleError("Only Numbers should not be in the Title of Post");
+        return false;
+      }
+      return true;
+    }
+    return true;
+  };
+
+  const validationForField = () => {
+    if (_.isEmpty(title)) {
+      setTitleError("Required");
+      return false;
+    } else if (_.isEmpty(content)) {
+      setContentError("Required");
+      return false;
+    } else if (_.size(content) < 20) {
+      setContentError("Content should be greater then 20 character");
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const creatDraftPost = (newPost) => {
@@ -44,63 +79,53 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
     notify("Post save in draft successfully");
   };
 
-  const draft = (values) => {
-    if (!_.isEmpty(values.title) || !_.isEmpty(values.content)) {
+  const draft = () => {
+    // eslint-disable-next-line no-restricted-globals
+    event.preventDefault();
+    if (_.isEmpty(title) && _.isEmpty(content)) {
+      setDraftError("Atleast One field has Content");
+    } else if (stringValidationTitle()) {
       let id = _.uniqueId("0");
       const newPost = {
         id: id,
-        title: values.title,
-        content: values.content,
+        title: title,
+        content: content,
         userId: userId,
       };
 
       creatDraftPost(newPost);
-      clearField(values);
-    } else {
-      setDraftError("Atleast One field has Content");
+      clearField();
     }
   };
 
-  const onSubmit = async (values) => {
-    const newPost = {
-      title: values.title,
-      content: values.content,
-      userId: userId,
-    };
+  const submit = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    event.preventDefault();
+    if (validationForField() && stringValidationTitle()) {
+      const newPost = {
+        title: title,
+        content: content,
+        userId: userId,
+      };
 
-    await createPost(newPost).then((response) => {
-      if (response.status === 201) {
-        notify(response.message);
-        values.title = "";
-        values.content = "";
-      } else if (response.status === 400) {
-        notify(response.message);
-      }
-    });
+      await createPost(newPost).then((response) => {
+        if (response.status === 201) {
+          notify(response.message);
+          setTitle("");
+          setContent("");
+        } else if (response.status === 400) {
+          notify(response.message);
+        }
+      });
 
-    const updatedPosts = [...posts];
-    updatedPosts.push(newPost);
-    setPosts(updatedPosts);
+      const updatedPosts = [...posts];
+      updatedPosts.push(newPost);
+      setPosts(updatedPosts);
+    }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      title: "",
-      content: "",
-    },
-
-    validationSchema: Yup.object({
-      title: Yup.string().required("Required"),
-      content: Yup.string()
-        .required("Required")
-        .min(20, "Content should be greater then 20 character"),
-    }),
-
-    onSubmit,
-  });
-
   return (
-    <form onSubmit={formik.handleSubmit} className="edit-form">
+    <form className="edit-form">
       <div className="form">
         <h2>Create your post</h2>
 
@@ -112,15 +137,14 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
           name="title"
           type="text"
           placeholder="Enter Title"
-          value={formik.values.title}
-          onClick={() => setDraftError(null)}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          onClick={() => setError()}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
 
         <div className="error-section">
-          {formik.touched.title && formik.errors.title ? (
-            <div className="error-msg">{formik.errors.title}</div>
+          {titleError !== null ? (
+            <div className="error-msg">{titleError}</div>
           ) : null}
         </div>
 
@@ -133,15 +157,14 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
           name="content"
           type="text"
           placeholder="Enter Content"
-          onClick={() => setDraftError(null)}
-          value={formik.values.content}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          onClick={() => setError()}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         />
 
         <div className="error-section">
-          {formik.touched.content && formik.errors.content ? (
-            <div className="error-msg">{formik.errors.content}</div>
+          {contentError !== null ? (
+            <div className="error-msg">{contentError}</div>
           ) : null}
         </div>
 
@@ -150,20 +173,25 @@ const CreatePost = ({ posts, setPosts, userId, draftPost, setDraftPost }) => {
         ) : null}
 
         <div className="buttons">
-          <div className="create-btn">
-            <Button variant="contained" type="submit">
-              Create
-            </Button>
-          </div>
-
-          <div className="create-btn">
-            <Button
+          <div className="create-btn-section">
+            <button
+              onClick={submit}
+              className="create-btn"
               variant="contained"
               type="submit"
-              onClick={() => draft(formik.values)}
+            >
+              Create
+            </button>
+          </div>
+          <div className="create-btn-section">
+            <button
+              onClick={draft}
+              className="create-btn"
+              variant="contained"
+              type="submit"
             >
               Draft
-            </Button>
+            </button>
           </div>
         </div>
       </div>

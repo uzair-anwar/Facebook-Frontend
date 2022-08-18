@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../../StyleSheets/posts-style.css";
 import { toast } from "react-toastify";
 import { createPost } from "../../Services/posts";
@@ -60,14 +60,14 @@ const ShowDraft = ({ draftPost, draftAllPosts, userId, setDraftAllPosts }) => {
       {draftPost.userId == userId ? (
         <div className="buttons">
           <button className="update-btn common-btn">
-            <Link
+            <NavLink
               className="update-link"
               to={"/Draft/" + draftPost.id + "/edit"}
               state={{ draftPost: draftPost, draftAllPosts: draftAllPosts }}
             >
               {" "}
               UPDATE
-            </Link>
+            </NavLink>
           </button>
 
           <button
