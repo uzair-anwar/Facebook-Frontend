@@ -1,7 +1,7 @@
 const axios = require("axios").default;
 const token = localStorage.getItem("token");
 
-const getAllPosts = async () => {
+export const getAllPosts = async () => {
   try {
     const response = await axios({
       method: "get",
@@ -18,7 +18,7 @@ const getAllPosts = async () => {
   }
 };
 
-const createPost = async (post) => {
+export const createPost = async (post) => {
   try {
     const response = await axios({
       method: "POST",
@@ -40,7 +40,7 @@ const createPost = async (post) => {
   }
 };
 
-const deletePost = async (id, userId) => {
+export const deletePost = async (id, userId) => {
   try {
     const response = await axios({
       method: "delete",
@@ -60,7 +60,7 @@ const deletePost = async (id, userId) => {
   }
 };
 
-const editPost = async (post) => {
+export const editPost = async (post) => {
   try {
     const response = await axios({
       method: "put",
@@ -81,5 +81,3 @@ const editPost = async (post) => {
     return error.message;
   }
 };
-
-module.exports = { getAllPosts, createPost, deletePost, editPost };
