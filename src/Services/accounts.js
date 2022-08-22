@@ -1,6 +1,6 @@
 const axios = require("axios").default;
 
-exports.signup = async (user) => {
+export const signup = async (user) => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_API}/auth/signup`,
@@ -15,7 +15,7 @@ exports.signup = async (user) => {
     return error.message;
   }
 };
-exports.login = async (user) => {
+export const login = async (user) => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_API}/auth/login`,

@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import "../../StyleSheets/account-style.css";
-import account from "../../Services/accounts";
+import { signup } from "../../Services/accounts";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
@@ -29,8 +29,7 @@ const Signup = () => {
       email: values.email,
       password: values.password,
     };
-    await account
-      .signup(user)
+    await signup(user)
       .then((response) => {
         if (response.status === 201) {
           notify();
