@@ -34,8 +34,7 @@ const Signup = () => {
         if (response.status === 201) {
           notify();
           navigate("/");
-        }
-        if (response.status === 409) {
+        } else if (response.status === 409) {
           setError(response.message);
         } else if (response.status === 422) {
           setError(response.error[0].msg);

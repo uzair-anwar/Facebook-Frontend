@@ -10,6 +10,7 @@ export const signup = async (user) => {
         password: user.password,
       }
     );
+    console.log(response);
     return response.data;
   } catch (error) {
     return error.message;
